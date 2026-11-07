@@ -61,15 +61,6 @@
                 </div>
 
                 <div class="input-group">
-                    <label for="shopeeCommission">Shopee - Comissão + Frete Grátis (%)</label>
-                    <div class="input-with-symbol">
-                        <input type="number" id="shopeeCommission" value="20.0" step="0.1" min="0">
-                        <span class="symbol">%</span>
-                    </div>
-                    <small>Padrão 14% + Programa Frete Grátis 6% (Teto de comissão: R$ 100).</small>
-                </div>
-
-                <div class="input-group">
                     <label for="ownGateway">Site Próprio - Gateway + Checkout (%)</label>
                     <div class="input-with-symbol">
                         <input type="number" id="ownGateway" value="4.99" step="0.01" min="0">
@@ -94,7 +85,7 @@
                 <div class="card card-shopee">
                     <div class="card-header">
                         <span class="platform-badge shopee">Shopee</span>
-                        <h3>Preço Recomendado (Sem Armadilha de Margem)</h3>
+                        <h3>Preço Recomendado (Baseado na Tabela)</h3>
                     </div>
                     <div class="price-display">
                         <span class="currency">R$</span>
@@ -102,8 +93,8 @@
                     </div>
 
                     <div id="shopeeAlert" class="shopee-alert hidden">
-                        <strong>⚠️ Ajuste Automático de Faixa:</strong>
-                        <p id="shopeeAlertText">O preço calculado originalmente cairia na faixa onde a taxa fixa de R$ 4,00 consome a margem. Ajustamos o valor para garantir o retorno total do custo e pelo menos 50% da margem desejada.</p>
+                        <strong>⚠️ Alerta de Faixa de Preço:</strong>
+                        <p id="shopeeAlertText">O preço calculado caiu na faixa onde a taxa fixa sobe. Considere ajustar o valor estrategicamente.</p>
                     </div>
 
                     <div class="metrics-grid">
@@ -113,7 +104,7 @@
                         </div>
                         <div class="metric">
                             <span class="label">Comissão Total</span>
-                            <span id="shopeeTotalComm" class="value">R$ 0,00</span>
+                            <span id="shopeeTotalComm" class="value">R$ 0,00 <small id="shopeeCommPercentTag" class="tag-percent">(20%)</small></span>
                         </div>
                         <div class="metric">
                             <span class="label">Imposto (R$)</span>
