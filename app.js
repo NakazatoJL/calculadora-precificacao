@@ -118,7 +118,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // Fallback caso ultrapasse a última faixa explicitada
         if (shopeePrice === 0) {
             const tier = tiers[tiers.length - 1];
             const divisor = 1 - taxPercent - tier.comm - targetMarginPercent;
@@ -133,7 +132,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const shopeeTaxVal = shopeePrice * taxPercent;
         const shopeeNetProfit = shopeePrice - cost - shopeeFixedFee - shopeeCommVal - shopeeTaxVal;
 
-        // Alerta automático se cair na zona de transição de faixa com taxa fixa mais pesada (ex: R$ 80 a R$ 88)
         if (shopeePrice >= 80.00 && shopeePrice <= 88.00) {
             isAdjustedAlert = true;
         }
@@ -142,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         document.getElementById('shopeePrice').textContent = formatCurrency(shopeePrice);
         document.getElementById('shopeeFixedFee').textContent = 'R$ ' + formatCurrency(shopeeFixedFee);
-        document.getElementById('shopeeTotalComm').textContent = 'R$ ' + formatCurrency(shopeeCommVal);
+        document.getElementById('shopeeTotalComm').innerHTML = 'R$ ' + formatCurrency(shopeeCommVal) + ` <small class="tag-percent">(${(shopeeCommPercent * 100).toFixed(0)}%)</small>`;
         document.getElementById('shopeeTaxVal').textContent = 'R$ ' + formatCurrency(shopeeTaxVal);
         document.getElementById('shopeeNetProfit').textContent = 'R$ ' + formatCurrency(shopeeNetProfit);
         document.getElementById('shopeeMarginEff').textContent = shopeeMarginEff.toFixed(1) + '%';
@@ -157,6 +155,5 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Initial run
     calculatePrices();
 });
