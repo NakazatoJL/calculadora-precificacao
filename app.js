@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const taxRateInput = document.getElementById('taxRate');
     const targetMarginInput = document.getElementById('targetMargin');
     const mlCommissionInput = document.getElementById('mlCommission');
-    const shopeeCommissionInput = document.getElementById('shopeeCommission');
     const ownGatewayInput = document.getElementById('ownGateway');
     const ownShippingInput = document.getElementById('ownShipping');
 
@@ -22,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Add event listeners to all inputs
     const allInputs = [
         costPriceInput, taxRateInput, targetMarginInput,
-        mlCommissionInput, shopeeCommissionInput, ownGatewayInput, ownShippingInput
+        mlCommissionInput, ownGatewayInput, ownShippingInput
     ];
 
     allInputs.forEach(input => {
