@@ -100,6 +100,8 @@ input[type="number"]:focus {
 
 .input-with-symbol input {
     width: 100%;
+    padding-left: 12px;
+    padding-right: 12px;
 }
 
 .input-with-symbol .symbol {
@@ -107,6 +109,7 @@ input[type="number"]:focus {
     right: 12px;
     color: #a0aec0;
     font-weight: bold;
+    pointer-events: none;
 }
 
 .input-with-symbol .symbol-prefix {
@@ -114,14 +117,17 @@ input[type="number"]:focus {
     left: 12px;
     color: #a0aec0;
     font-weight: bold;
+    pointer-events: none;
 }
 
-.input-with-symbol input:has(+ .symbol) {
-    padding-right: 30px;
+.input-with-symbol input.has-prefix,
+.input-with-symbol:has(.symbol-prefix) input {
+    padding-left: 38px;
 }
 
-.input-with-symbol input:has(.symbol-prefix) {
-    padding-left: 35px;
+.input-with-symbol input.has-suffix,
+.input-with-symbol:has(.symbol) input {
+    padding-right: 32px;
 }
 
 .preset-buttons {
