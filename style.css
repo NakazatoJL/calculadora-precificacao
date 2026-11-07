@@ -1,0 +1,245 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+    background-color: #f4f6f8;
+    color: #333;
+    line-height: 1.5;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+header {
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 1.8rem;
+    color: #1a1a1a;
+    margin-bottom: 6px;
+}
+
+header p {
+    color: #666;
+    font-size: 0.95rem;
+}
+
+.grid-main {
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    gap: 20px;
+}
+
+@media (max-width: 850px) {
+    .grid-main {
+        grid-template-columns: 1fr;
+    }
+}
+
+.card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e1e4e8;
+    margin-bottom: 20px;
+}
+
+.card h2 {
+    font-size: 1.1rem;
+    color: #2c3e50;
+    margin-bottom: 16px;
+}
+
+.input-group {
+    margin-bottom: 16px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #4a5568;
+    margin-bottom: 6px;
+}
+
+.input-group small {
+    display: block;
+    font-size: 0.75rem;
+    color: #718096;
+    margin-top: 4px;
+}
+
+input[type="number"] {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #cbd5e0;
+    border-radius: 6px;
+    font-size: 0.95rem;
+}
+
+input[type="number"]:focus {
+    outline: none;
+    border-color: #3182ce;
+}
+
+.input-with-symbol {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-with-symbol input {
+    width: 100%;
+}
+
+.input-with-symbol .symbol {
+    position: absolute;
+    right: 12px;
+    color: #a0aec0;
+    font-weight: bold;
+}
+
+.input-with-symbol .symbol-prefix {
+    position: absolute;
+    left: 12px;
+    color: #a0aec0;
+    font-weight: bold;
+}
+
+.input-with-symbol input:has(+ .symbol) {
+    padding-right: 30px;
+}
+
+.input-with-symbol input:has(.symbol-prefix) {
+    padding-left: 35px;
+}
+
+.preset-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    margin-bottom: 8px;
+}
+
+.btn-preset {
+    padding: 6px 8px;
+    font-size: 0.75rem;
+    background: #edf2f7;
+    border: 1px solid #cbd5e0;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-preset.active {
+    background: #3182ce;
+    color: white;
+    border-color: #2b6cb0;
+}
+
+.divider {
+    border: 0;
+    height: 1px;
+    background: #e2e8f0;
+    margin: 20px 0;
+}
+
+.results-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.platform-badge {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.platform-badge.shopee { background: #ffeae6; color: #ee4d2d; }
+.platform-badge.ml { background: #fff9db; color: #2d3277; }
+.platform-badge.own { background: #ebf8ff; color: #2b6cb0; }
+
+.price-display {
+    display: flex;
+    align-items: baseline;
+    margin-bottom: 16px;
+}
+
+.price-display .currency {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-right: 4px;
+    color: #2d3748;
+}
+
+.price-display .price-value {
+    font-size: 2.4rem;
+    font-weight: 800;
+    color: #1a202c;
+}
+
+.shopee-alert {
+    background: #fffaf0;
+    border-left: 4px solid #dd6b20;
+    padding: 10px 12px;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    font-size: 0.82rem;
+    color: #7b341e;
+}
+
+.shopee-alert.hidden { display: none; }
+
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 12px;
+    background: #f7fafc;
+    padding: 12px;
+    border-radius: 8px;
+}
+
+.metric {
+    display: flex;
+    flex-direction: column;
+}
+
+.metric .label {
+    font-size: 0.72rem;
+    color: #718096;
+    text-transform: uppercase;
+}
+
+.metric .value {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #2d3748;
+}
+
+.metric .value.highlight { color: #38a169; }
+
+footer {
+    text-align: center;
+    margin-top: 30px;
+    color: #a0aec0;
+    font-size: 0.8rem;
+}

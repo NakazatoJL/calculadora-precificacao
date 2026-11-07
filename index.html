@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Preços - Mercado Livre, Shopee & Site Próprio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Calculadora de Preço de Venda</h1>
+            <p>Precificação inteligente para Mercado Livre, Shopee e E-commerce Próprio</p>
+        </header>
+
+        <main class="grid-main">
+            <!-- Form Card -->
+            <section class="card form-card">
+                <h2>1. Parâmetros do Produto</h2>
+
+                <div class="input-group">
+                    <label for="costPrice">Custo Total do Produto (R$)</label>
+                    <input type="number" id="costPrice" placeholder="Ex: 50.00" step="0.01" min="0" value="50">
+                    <small>Soma do custo de aquisição, embalagem e custos diretos.</small>
+                </div>
+
+                <div class="input-group">
+                    <label for="taxPreset">Alíquota de Imposto</label>
+                    <div class="preset-buttons">
+                        <button type="button" class="btn-preset" data-tax="0">Isento (0%)</button>
+                        <button type="button" class="btn-preset active" data-tax="6">Simples 6%</button>
+                        <button type="button" class="btn-preset" data-tax="11.2">Simples 11.2%</button>
+                        <button type="button" class="btn-preset" data-tax="18">Lucro Pres. 18%</button>
+                    </div>
+                    <div class="input-with-symbol">
+                        <input type="number" id="taxRate" placeholder="6.0" step="0.1" min="0" value="6.0">
+                        <span class="symbol">%</span>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="targetMargin">Margem Operacional Desejada (%)</label>
+                    <div class="input-with-symbol">
+                        <input type="number" id="targetMargin" placeholder="20.0" step="0.1" min="0" value="20.0">
+                        <span class="symbol">%</span>
+                    </div>
+                    <small>Porcentagem líquida sobre o preço final de venda.</small>
+                </div>
+
+                <hr class="divider">
+
+                <h2>2. Custos Operacionais & Fretes</h2>
+
+                <div class="input-group">
+                    <label for="mlCommission">Mercado Livre - Comissão (%)</label>
+                    <div class="input-with-symbol">
+                        <input type="number" id="mlCommission" value="14.0" step="0.1" min="0">
+                        <span class="symbol">%</span>
+                    </div>
+                    <small>Ex: Clássico (~11-14%), Premium (~16-19%).</small>
+                </div>
+
+                <div class="input-group">
+                    <label for="shopeeCommission">Shopee - Comissão + Frete Grátis (%)</label>
+                    <div class="input-with-symbol">
+                        <input type="number" id="shopeeCommission" value="20.0" step="0.1" min="0">
+                        <span class="symbol">%</span>
+                    </div>
+                    <small>Padrão 14% + Programa Frete Grátis 6% (Teto de comissão: R$ 100).</small>
+                </div>
+
+                <div class="input-group">
+                    <label for="ownGateway">Site Próprio - Gateway + Checkout (%)</label>
+                    <div class="input-with-symbol">
+                        <input type="number" id="ownGateway" value="4.99" step="0.01" min="0">
+                        <span class="symbol">%</span>
+                    </div>
+                    <small>Taxa do meio de pagamento (ex: Stripe, Mercado Pago, Pagar.me).</small>
+                </div>
+
+                <div class="input-group">
+                    <label for="ownShipping">Site Próprio - Frete Fixo/Médio (R$)</label>
+                    <div class="input-with-symbol">
+                        <span class="symbol-prefix">R$</span>
+                        <input type="number" id="ownShipping" value="0.00" step="0.01" min="0">
+                    </div>
+                    <small>Se você oferece frete grátis e embute no preço.</small>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section class="results-container">
+                <!-- Shopee Highlight Card -->
+                <div class="card card-shopee">
+                    <div class="card-header">
+                        <span class="platform-badge shopee">Shopee</span>
+                        <h3>Preço Recomendado (Sem Armadilha de Margem)</h3>
+                    </div>
+                    <div class="price-display">
+                        <span class="currency">R$</span>
+                        <span id="shopeePrice" class="price-value">0.00</span>
+                    </div>
+
+                    <div id="shopeeAlert" class="shopee-alert hidden">
+                        <strong>⚠️ Ajuste Automático de Faixa:</strong>
+                        <p id="shopeeAlertText">O preço calculado originalmente cairia na faixa onde a taxa fixa de R$ 4,00 consome a margem. Ajustamos o valor para garantir o retorno total do custo e pelo menos 50% da margem desejada.</p>
+                    </div>
+
+                    <div class="metrics-grid">
+                        <div class="metric">
+                            <span class="label">Taxa Fixa Shopee</span>
+                            <span id="shopeeFixedFee" class="value">R$ 0,00</span>
+                        </div>
+                        <div class="metric">
+                            <span class="label">Comissão Total</span>
+                            <span id="shopeeTotalComm" class="value">R$ 0,00</span>
+                        </div>
+                        <div class="metric">
+                            <span class="label">Imposto (R$)</span>
+                            <span id="shopeeTaxVal" class="value">R$ 0,00</span>
+                        </div>
+                        <div class="metric">
+                            <span class="label">Lucro Líquido</span>
+                            <span id="shopeeNetProfit" class="value highlight">R$ 0,00</span>
+                        </div>
+                        <div class="metric">
+                            <span class="label">Margem Efetiva</span>
+                            <span id="shopeeMarginEff" class="value highlight">0,0%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mercado Livre Card -->
+                <div class="card card-ml">
+                    <div class="card-header">
+                        <span class="platform-badge ml">Mercado Livre</span>
+                        <h3>Preço Sugerido</h3>
+                    </div>
+                    <div class="price-display">
+                        <span class="currency">R$</span>
+                        <span id="mlPrice" class="price-value">0.00</span>
+                    </div>
+
+                    <div class="metrics-grid">
+                        <div class="metric">
+                            <span class="label">Taxa Fixa ML (&lt; R$ 79)</span>
+                            <span id="mlFixedFee" class="value">R$ 6,00</span>
+                        </div>
+                        <div class="metric">
+                            <span class="label">Comissão R$</span>
+                            <span id="mlTotalComm" class="value">R$ 0,00</span>
+                        </div>
+                        <div class="metric">
+                            <span class="label">Imposto (R$)</span>
+                            <span id="mlTaxVal" class="value">R$ 0,00</span>
+                        </div>
+                        <div class="metric">
+                            <span class="label">Lucro Líquido</span>
+                            <span id="mlNetProfit" class="value highlight">R$ 0,00</span>
+                        </div>
+                        <div class="metric">
+                            <span class="label">Margem Efetiva</span>
+                            <span id="mlMarginEff" class="value highlight">0,0%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Site Próprio Card -->
+                <div class="card card-own">
+                    <div class="card-header">
+                        <span class="platform-badge own">Site Próprio</span>
+                        <h3>Preço Sugerido</h3>
+                    </div>
+                    <div class="price-display">
+                        <span class="currency">R$</span>
+                        <span id="ownPrice" class="price-value">0.00</span>
+                    </div>
+
+                    <div class="metrics-grid">
+                        <div class="metric">
+                            <span class="label">Taxa Gateway (R$)</span>
+                            <span id="ownGatewayVal" class="value">R$ 0,00</span>
+                        </div>
+                        <div class="metric">
+                            <span class="label">Frete Embutido</span>
+                            <span id="ownShippingVal" class="value">R$ 0,00</span>
+                        </div>
+                        <div class="metric">
+                            <span class="label">Imposto (R$)</span>
+                            <span id="ownTaxVal" class="value">R$ 0,00</span>
+                        </div>
+                        <div class="metric">
+                            <span class="label">Lucro Líquido</span>
+                            <span id="ownNetProfit" class="value highlight">R$ 0,00</span>
+                        </div>
+                        <div class="metric">
+                            <span class="label">Margem Efetiva</span>
+                            <span id="ownMarginEff" class="value highlight">0,0%</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>Calculadora de Precificação E-commerce &bull; Desenvolvido para deploy estático</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
